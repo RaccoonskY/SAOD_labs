@@ -142,9 +142,6 @@
   <ItemGroup>
     <ClCompile Include="L10(II).cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="data_sets.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
