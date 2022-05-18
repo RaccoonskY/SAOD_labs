@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 #include <ctime>
-#include "../L9(II)/data_sets.h"
+#include <string>
 
 
 int rand_int() {
@@ -10,90 +10,86 @@ int rand_int() {
 
 }
 
-void rand_init(Data*& data)
+int hashf_key(std::string str)
 {
-    for (int i = 0; i < data->_size; i++)
+    int hash_key = 0;
+    for (size_t i = 0; i < str.size(); i++)
     {
-        data->_array[i].inf = rand_int();
-        data->_array[i].key = rand_int();
+        hash_key += (int)str[i];
     }
-}
-
-void unique_init(Data*& data, const int& size)
-{
-    int cur_rand;
-    Item* mass = data->_array;
-    int* temp_mas = new int[size];
-
-    for (int i = 0; i < size; i++)
-    {
-        cur_rand = 0 + rand() % size;
-        while (temp_mas[cur_rand] == -1)
-        {
-            cur_rand = 0 + rand() % size;
-        }
-        temp_mas[cur_rand] = -1;
-        mass[i].key = cur_rand;
-        mass[i].inf = rand_int();
-    }
-    delete[] temp_mas;
+    hash_key = hash_key % 10;
+    return hash_key;
 }
 
 
-void show(Data* data, int size)
+void hash_func(std::string str, std::string hash_table[])
 {
-    Item* arr = data->_array;
-    for (int i = 0; i < size; i++)
+    int hash_key = 0;
+    for (size_t i = 0; i < str.size(); i++)
     {
-        std::cout << ' ' << arr[i].key << '(' << arr[i].inf << ')';
+        hash_key += (int)str[i];
+    }
+    hash_key = hash_key % 10;
+    hash_table[hash_key] = str;
+};
+
+void hash_func(std::string keys[], std::string hash_table[])
+{
+    int hash_key;   
+    for (size_t i = 0; i < 10; i++)
+    {
+        hash_key = hashf_key(keys[i]);
+        hash_table[hash_key] = keys[i];
+    }
+    
+  
+};
+
+void show(std::string h_table[], const int& size)
+{
+    std::cout << "HASH TABLE: \n";
+    for (size_t i = 0; i < size; i++)
+    {
+        std::cout << "I(" << i << "): " << h_table[i] << std::endl;
     }
 }
 
-void show(Item* data, int size)
+void search(std::string searched, std::string h_table[])
 {
-    for (int i = 0; i < size; i++)
+    int h_key = hashf_key(searched);
+    if (h_table[h_key] == searched)
     {
-        std::cout << ' ' << data[i].key << '(' << data[i].inf << ')';
+        std::cout << "Element is found on position: " << h_key << "\n";
     }
-}
-
-
-
-void mem_clear(Data*& data)
-{
-    delete data->_array;
-    delete data;
+    else
+    {
+        
+        std::cout << "There is no such element! ;( Your h.key is "<<h_key << "\n";
+    }
 }
 
 enum Menu {
     MENU_INIT,
     MENU_SHOW,
-    MENU_POCKET,
-    MENU_REPEAT,
-    MENU_GRADE,
+    MENU_SRCH,
     MENU_EXIT
 
 };
 
 int main()
 {
+    std::string my_keys[10] = { "Anna", "Victor", "Diana", "TATyana", "Sergey", "MishA", "Nica","lesha", "Johnny", "AlexeY" };
+    std::string hash_table[10];
+    std::string searched;
     srand(time(0));
-
-    Data* data_set = nullptr;
-    Item* sorted_ar = nullptr;
-    ListNode* lists[100];
-
-    for (int i = 0; i < 100; i++)
-    {
-        lists[i] = nullptr;
-    }
-
+    
     int compares = 0;
     int refs = 0;
-    int size = 0;
+    int size = 10;
 
     bool program = true;
-    int chosen, mode, init_mode;
+    int chosen;
+    int init_mode = 0;
     while (program)
     {
         std::cout
@@ -105,7 +101,8 @@ int main()
         std::cout
             << "\n| 0.Initialize your rand array.     |"
             << "\n| 1.Show non-sorted array.          |"
-            << "\n| 5.EXIT.                           |";
+            << "\n| 2.Search element in h. table      |"
+            << "\n| 3.EXIT.                           |";
         std::cout
             << "\n_____________________________________" << std::endl;
         std::cin >> chosen;
@@ -113,41 +110,23 @@ int main()
         switch (chosen)
         {
         case MENU_INIT:
-            if (data_set != nullptr)
+            hash_func(my_keys, hash_table);
+            init_mode = 1;
+            break;
+        case MENU_SHOW:
+            if (init_mode == 1)
             {
-                mem_clear(data_set);
-                data_set = nullptr;
-            }
-            std::cout << "Unique elements? (0 - yes, 1 - no)";
-            std::cin >> init_mode;
-            while (init_mode != 0 && init_mode != 1)
-            {
-                std::cout << "Invalid choose, try again: ";
-                std::cin >> init_mode;
-            }
-
-            std::cout << "Enter size of array:";
-            std::cin >> size;
-            while (init_mode == 1 && size < 100)
-            {
-                std::cout << "Amount of ununique elements must be > 100!";
-                std::cin >> size;
-            }
-
-            data_set = new Data(size);
-
-            if (init_mode == 0)
-            {
-                unique_init(data_set, size);
+                show(hash_table, size);
             }
             else
             {
-                rand_init(data_set);
+                std::cout << "Hash table is not initialised!";
             }
             break;
-        case MENU_SHOW:
-            if (data_set != nullptr) show(data_set->_array, size);
-            else std::cout << "Initialize array first!\n";
+        case MENU_SRCH:
+            std::cout << "Enter your string: ";
+            std::cin >> searched;
+            search(searched, hash_table);
             break;
         case MENU_EXIT:
             program = false;
@@ -156,8 +135,6 @@ int main()
 
     }
 
-    mem_clear(data_set);
-    delete[] sorted_ar;
     return 0;
 }
 
