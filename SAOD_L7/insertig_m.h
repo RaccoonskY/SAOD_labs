@@ -1,0 +1,42 @@
+#pragma once
+#include <iostream>
+
+int* inserting_m(int _array[], int size, int& compares, int& refers)
+{
+	compares = 0;
+	refers = 0;
+	int* a = new int[size];
+	int temp = 0;
+	int j = 0;
+
+
+	for (size_t i = 0; i < size; i++)
+	{
+		a[i] = _array[i];
+	}
+
+
+
+	for (int i = 1; i < size; i++)
+	{
+		temp = a[i];
+		j = i - 1;
+		refers += 2;
+
+		while (j>=0 && temp < a[j])
+		{
+			a[j + 1] = a[j];
+			j = j - 1;
+			refers += 2;
+			compares += 2;
+		}
+		refers++;
+		compares += 2;
+		a[j + 1] = temp;
+
+	}
+	
+
+	return a;
+}
+
