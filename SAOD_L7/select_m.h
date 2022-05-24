@@ -18,7 +18,7 @@ int* select_m(int _array[], int size, int& compares, int& refers)
 		temp = a[i];
 		j = i - 1;
 		k = i;
-		refers += 3;
+		refers += 1;
 
 		for (j = i+1; j < size; j++)
 		{
@@ -26,7 +26,7 @@ int* select_m(int _array[], int size, int& compares, int& refers)
 			{
 				k = j;
 				temp = a[j];
-				refers += 2;
+				refers += 1;
 			}
 			compares += 1;
 		}

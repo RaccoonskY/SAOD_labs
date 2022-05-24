@@ -9,11 +9,11 @@ void quicksort_am(int _array[] ,int left, int right, int& compares, int& refers)
 	j = right;
 	int m = (left + right) / 2;
 	medi = _array[m];
-	refers += 4;
+	refers++;
 	do
 	{
-		while (_array[i] < medi) { i++; refers++; compares++; }
-		while (_array[j] > medi) { j--; refers++; compares++; }
+		while (_array[i] < medi) { i++; compares++; }
+		while (_array[j] > medi) { j--; compares++; }
 		compares += 2;
 		if (i <= j)
 		{
@@ -22,7 +22,7 @@ void quicksort_am(int _array[] ,int left, int right, int& compares, int& refers)
 			_array[j] = temp;
 			i++;
 			j--;
-			refers += 4;
+			refers += 3;
 		}
 		compares++;
 
@@ -31,5 +31,7 @@ void quicksort_am(int _array[] ,int left, int right, int& compares, int& refers)
 	compares+=2;
 	if (left < j) quicksort_am(_array, left, j, compares, refers);
 	if (i < right) quicksort_am(_array, i, right, compares, refers);
+
+	refers = refers / 3;
 }
 

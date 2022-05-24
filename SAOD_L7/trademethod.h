@@ -28,7 +28,7 @@ int* trade_method(int array[], int size, int& compares, int& refers )
 		}
 
 	}
-
+	refers = refers / 3;
 	return _array;
 }
 

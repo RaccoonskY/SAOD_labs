@@ -10,20 +10,21 @@ void pyr_select(int _array[], int al, int ar, int& compares, int& refers)
 	x = _array[al];
 	refers += 3;
 
-	if (j < ar && _array[j + 1] > _array[j]) j++; refers++; compares+=2;
+	if (j < ar && _array[j + 1] > _array[j]) j++;compares+=1;
 	while (j <= ar && _array[j] > x)
 	{
+
 		_array[i] = _array[j];
 		i = j;
 		j = 2 * j;
 		
-		if (j < ar && _array[j + 1] > _array[j]) j++; refers++; compares+=2;
+		if (j < ar && _array[j + 1] > _array[j]) j++; compares++;
 
-		refers += 2;
-		compares += 2;
-		compares += 2;
+		compares++;
+
+		
 	}
-	compares += 2;
+	compares += 1;
 	_array[i] = x;
 	refers++;
 }

@@ -10,7 +10,7 @@ int* shell_m(int _array[], int size, int& compares, int& refers)
 	int cur_st = 0;
 	int* selection_steps = new int[steps - 1];
 	int temp, j = 0;
-	refers += 3;
+
 
 	for (size_t i = 0; i < size; i++)
 	{
@@ -35,16 +35,16 @@ int* shell_m(int _array[], int size, int& compares, int& refers)
 		{
 			temp = a[i];
 			j = i - cur_st;
-			refers += 2;
+			refers += 1;
 			while (j >= 0 && temp < a[j])
 			{
 				a[j + cur_st] = a[j];
 				j = j - cur_st;
-				refers += 2;
-				compares += 2;
+				refers += 1;
+				compares += 1;
 
 			}
-			compares += 2;
+			compares += 1;
 			a[j + cur_st] = temp;
 			refers++;
 

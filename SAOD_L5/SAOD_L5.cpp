@@ -5,7 +5,7 @@
 
 int rand_unit() {
 
-    int randi = 0 + rand() % 10;
+    int randi = 0 + rand() % 100;
     return randi;
 
 }
@@ -29,11 +29,11 @@ void backward(TNode*& node, int wsp = 0)
 {
     if (node != nullptr)
     {
-        backward(node->n_right, wsp + 5);
+        backward(node->n_right, wsp + 8);
         std::cout << std::setw(wsp);
         std::cout << node->n_key << ':';
         std::cout << (node->n_inf) << '\n'; //обработка inf  Node (можно использовать для search, условие ставим  ) 
-        backward(node->n_left, wsp + 5);
+        backward(node->n_left, wsp + 8);
 
     };
 }
@@ -343,6 +343,8 @@ int main()
             row_output(Root);
             break;
         case MENU_RANDINIT:
+            mem_clear(Root);
+            Root = nullptr;
             std::cout << "Enter count of random nodes: ";
             std::cin >> n;
             tree_randinit(Root, n);
