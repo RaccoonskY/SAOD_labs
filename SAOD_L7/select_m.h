@@ -12,29 +12,28 @@ int* select_m(int _array[], int size, int& compares, int& refers)
 	}
 
 	int temp = 0;
-	int j,k = 0;
-	for (size_t i = 0; i < size-1; i++)
+	int k = 0;
+	 
+	for (size_t i = 0; i < size; i++)
 	{
-		temp = a[i];
-		j = i - 1;
 		k = i;
-		refers += 1;
-
-		for (j = i+1; j < size; j++)
+		for (size_t j = i + 1; j < size; j++)
 		{
-			if (a[j] < temp)
+			compares++;
+			if (a[j] < a[k])
 			{
 				k = j;
-				temp = a[j];
-				refers += 1;
 			}
-			compares += 1;
+			
 		}
-
-
-		a[k] = a[i];
-		a[i] = temp;
-		refers += 2;
+		if (i != k)
+		{
+			temp = a[i];
+			a[i] = a[k];
+			a[k] = temp;
+			refers++;
+		}
+		
 	}
 
 	return a;

@@ -13,7 +13,6 @@ Item* simple_pocket(Data* data, int size, int& compares, int& refers)
 	for (int i = 0; i < size; i++)
 	{
 		_array[_mass[i].key] = _mass[i];
-		refers++;
 	}
 
 	return _array;
@@ -37,15 +36,15 @@ Item* simple_pocket2(Data* data, int size, int& compares, int& refers)
 
 	for (int i = 0; i < size; i++)
 	{
+		compares++;
 		while (_array[i].key != i)
 		{
 			compares++;
 			temp = _array[i];
 			_array[i] = _array[temp.key];
 			_array[temp.key] = temp;
-			refers += 3;
+			refers += 1;
 		}
-		compares++;
 	}	
 
 	return _array;

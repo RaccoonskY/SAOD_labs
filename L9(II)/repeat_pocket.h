@@ -5,18 +5,21 @@
 
 
 
-void show(ListNode* mass[])
+void show(ListNode* mass[], const int& size)
 {
 	ListNode* temp;
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < size; i++)
 	{
 		temp = mass[i];
-		while (temp != nullptr)
+		if (mass[i] != nullptr)
 		{
-			std::cout << " " << (temp->_item).key<<'('<< (temp->_item).inf <<')';
-			temp = temp->_next;
+			while (temp != nullptr)
+			{
+				std::cout << " " << (temp->_item).key << '(' << (temp->_item).inf << ')';
+				temp = temp->_next;
+			}
+			std::cout << "\n";
 		}
-		std::cout << '\n';
 	}
 }
 
@@ -28,6 +31,7 @@ void repeat_pocket(Item items[], ListNode* mass[], const int& size,int& compares
 	Item tempit;
 	ListNode* temp_node;
 	ListNode* last_node;
+
 	for (int i = 0; i < size; i++)
 	{
 		tempit = items[i];
@@ -55,11 +59,14 @@ void repeat_pocket(Item items[], ListNode* mass[], const int& size,int& compares
 
 }
 
-void mem_clear(ListNode* mass[])
+void mem_clear(ListNode* mass[], const int& size)
 {
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < size; i++)
 	{
+
 		delete mass[i];
 		mass[i] = nullptr;
+
+	
 	}
 }

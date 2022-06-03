@@ -77,7 +77,7 @@ Item* union_lists(ListNode* mass[], const int& size)
 	return new_items;
 }
 
-Item* grading_sort(Item items[], const int& size, int& compares, int& refs)
+Item* grading_sort(Item items[], const int& size, const int& grade, int& compares, int& refs)
 {
 	compares = 0;
 	refs = 0;
@@ -99,7 +99,7 @@ Item* grading_sort(Item items[], const int& size, int& compares, int& refs)
 		mass[i] = nullptr;
 	}
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < grade; i++)
 	{
 		ten_val = pow(10, i);
 		for (int j = 0; j < size; j++)

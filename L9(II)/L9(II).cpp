@@ -6,19 +6,19 @@
 #include "grading_sort.h"
 
 
-int rand_int() {
+int rand_int(const int& _highest) {
 
-    int randi = 0 + rand() % 100;
+    int randi = 0 + rand() % _highest;
     return randi;
 
 }
 
-void rand_init(Data*& data)
+void rand_init(Data*& data, const int& size )
 {
     for (int i = 0; i < data->_size; i++)
     {
-        data->_array[i].inf = rand_int();
-        data->_array[i].key = rand_int();
+        data->_array[i].inf = rand_int(size);
+        data->_array[i].key = rand_int(size);
     }
 }
 
@@ -37,7 +37,7 @@ void unique_init(Data*& data, const int& size)
         }
         temp_mas[cur_rand] = -1;
         mass[i].key = cur_rand;
-        mass[i].inf = rand_int();
+        mass[i].inf = rand_int(size - 1);
     }
     delete[] temp_mas;
 }
@@ -60,13 +60,32 @@ void show(Item* data, int size)
     }
 }
 
-
+int grade_of_size(const int& size)
+{
+    int temps = size;
+    int grade = 1;
+    while (temps > 10)
+    {
+        temps /= 10;
+        grade++;
+    }
+    return grade;
+}
 
 void mem_clear(Data*& data)
 {
     delete data->_array;
     delete data;
 }
+
+void null_init(ListNode* list[], const int& size)
+{
+    for (size_t i = 0; i < size; i++)
+    {
+        list[i] = nullptr;
+    }
+}
+
 
 enum Menu {
     MENU_INIT,
@@ -78,22 +97,21 @@ enum Menu {
 
 };
 
+
+
 int main()
 {
     srand(time(0));
 
     Data* data_set = nullptr;
     Item* sorted_ar = nullptr;
-    ListNode* lists[100];
-
-    for (int i = 0; i < 100; i++)
-    {
-        lists[i] = nullptr;
-    }
-
+    ListNode** lists = nullptr;
+   
+   
     int compares = 0;
     int refs = 0;
     int size = 0;
+    int k, max_by_grade;
 
     bool program = true;
     int chosen, mode, init_mode;
@@ -134,13 +152,12 @@ int main()
 
             std::cout << "Enter size of array:";
             std::cin >> size;
-            while (init_mode == 1 && size < 100)
-            {
-                std::cout << "Amount of ununique elements must be > 100!";
-                std::cin >> size;
-            }
-          
             data_set = new Data(size);
+
+            std::cout << "Enter the maximum grade of random numbers: ";
+            std::cin >> k;
+            max_by_grade = pow(10, k);
+            std::cout << "\nMaximum possible: " << max_by_grade;
 
             if (init_mode == 0)
             {
@@ -148,12 +165,15 @@ int main()
             }
             else
             {
-                rand_init(data_set);
+                rand_init(data_set, max_by_grade);
+                lists = new ListNode*  [max_by_grade];
+                null_init(lists, max_by_grade);
+
             }   
             break;
         case MENU_GRADE:
             if (sorted_ar != nullptr)  delete[] sorted_ar;
-            sorted_ar = grading_sort(data_set->_array, size, compares, refs);
+            sorted_ar = grading_sort(data_set->_array, size,k, compares, refs);
             std::cout << "\nCount of compares: " << compares << '\n' << "Count of refers:" << refs << '\n';
             show(sorted_ar, size);
             break;
@@ -172,10 +192,12 @@ int main()
                     }
                     if (mode == 0)
                     {
+                        compares = 0; refs = 0;
                         sorted_ar = simple_pocket(data_set, size, compares, refs);
                     }
                     else
                     {
+                        compares = 0; refs = 0;
                         sorted_ar = simple_pocket2(data_set, size, compares, refs);
                     }
                     std::cout << "\nCount of compares: " << compares << '\n' << "Count of refers:" << refs << '\n';
@@ -188,10 +210,17 @@ int main()
             }
             break;
         case MENU_REPEAT:
-            mem_clear(lists);
-            repeat_pocket(data_set->_array, lists, size, compares, refs);
-            std::cout << "\nCount of compares: " << compares << '\n' << "Count of refers:" << refs << '\n';
-            show(lists);
+            if (init_mode == 1)
+            {
+                mem_clear(lists, max_by_grade);
+                repeat_pocket(data_set->_array, lists, size, compares, refs);
+                std::cout << "\nCount of compares: " << compares << '\n' << "Count of refers:" << refs << '\n';
+                show(lists, size);
+            }
+            else
+            {
+                std::cout << "You can't use repeating pocket method with unique elements array! \n";
+            }
             break;
         case MENU_SHOW:
             if (data_set != nullptr) show(data_set->_array, size);
@@ -204,8 +233,15 @@ int main()
 
     }
 
-    mem_clear(data_set);
-    mem_clear(lists);
+    if (data_set != nullptr)
+    {
+        mem_clear(data_set);
+    }
+    if (lists != nullptr)
+    {
+        mem_clear(lists, max_by_grade);
+    }
+    
     delete[] sorted_ar;
     return 0;
 }

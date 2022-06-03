@@ -139,7 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DynQueue.cpp" />
     <ClCompile Include="SAOD_course_Yablonskas.cpp" />
+    <ClCompile Include="Stack.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DynQueue.h" />
+    <ClInclude Include="Stack.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

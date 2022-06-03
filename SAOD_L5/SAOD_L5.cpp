@@ -29,11 +29,11 @@ void backward(TNode*& node, int wsp = 0)
 {
     if (node != nullptr)
     {
-        backward(node->n_right, wsp + 8);
+        backward(node->n_right, wsp + 4);
         std::cout << std::setw(wsp);
-        std::cout << node->n_key << ':';
-        std::cout << (node->n_inf) << '\n'; //обработка inf  Node (можно использовать для search, условие ставим  ) 
-        backward(node->n_left, wsp + 8);
+        std::cout << node->n_key << '\n';
+        //std::cout << (node->n_inf) << '\n'; //обработка inf  Node (можно использовать для search, условие ставим  ) 
+        backward(node->n_left, wsp + 4);
 
     };
 }

@@ -1,0 +1,6 @@
+Module_1(3)
+P:gigachad() W:5;P:vigachad() W:4;P:tigachad() W:8; 
+Module_2(33)
+P:ggggigachad() W:5;P:vvvvigachad() W:4;P:ttttigachad() W:8; 
+MEGAMODULE(4)
+P:foku() W:3; 

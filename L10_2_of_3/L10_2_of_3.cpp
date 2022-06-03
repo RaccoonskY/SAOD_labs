@@ -134,7 +134,7 @@ int main()
             << "\n|___________________________________|";
         std::cout
             << "\n| 0.Initialize your rand array.     |"
-            << "\n| 1.Show non-sorted array.          |"
+            << "\n| 1.Show array.                     |"
             << "\n| 2.Search element in h. table      |"
             << "\n| 3.Add new elem to h.table.        |"
             << "\n| 4.EXIT.                           |";
