@@ -37,7 +37,7 @@ class Stack
 private:
 	SNode* _mass = nullptr;
 	int _ptr = -1;
-	int _size = 10;
+	int _size = 0;
 
 public:
 	Stack()
@@ -58,37 +58,10 @@ public:
 	void push(const SNode& node);
 	void pop();
 	void show();
-	int get_words() { return _mass->get_words(); }
-	std::string get_subprog(){ return _mass->get_prog(); }
 	int get_ptr() { return _ptr; }
 	SNode* get_mass() { return _mass; }
 	int get_size() { return _size; }
-
-	void data_stack() {
-		std::string name;
-		int count;
-		for (size_t i = 0; i < _size; i++)
-		{
-			std::cout << "Enter name of subprogramm:";
-			std::cin >> name;
-			std::cout << "Enter the number of rows:";
-			std::cin >> count;
-			push(name, count);
-		}
-	}
-
-
-
-	void init_stack(const int& size) {
-		if (_mass == nullptr)
-		{
-			_mass = new SNode[size];
-			_size = size;
-		}
-	}
-
-
-
+	void init_stack(const int& size);
 
 	~Stack()
 	{

@@ -9,7 +9,7 @@ void pyr_select(int _array[], int al, int ar, int& compares, int& refers)
 	j = 2 * al;
 	x = _array[al];
 
-	if (j < ar && _array[j + 1] > _array[j]) j++;compares++;
+	if (j < ar && _array[j + 1] > _array[j]) j++; compares++;
 	while (j <= ar && _array[j] > x)
 	{	
 		compares++;
@@ -48,9 +48,10 @@ void pyramid_am(int _array[], int size, int& compares, int& refers)
 		temp = _array[0];
 		_array[0] = _array[right];
 		_array[right] = temp;
+		refers += 3;
 		right--;
 		pyr_select(_array, left, right, compares, refers);
-		refers +=3;
+	
 
 	}
 	refers = refers / 3;

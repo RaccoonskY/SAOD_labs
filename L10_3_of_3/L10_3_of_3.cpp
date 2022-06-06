@@ -29,6 +29,23 @@ int hashf_key(std::string str, const int& m)
     return hash_key;
 }
 
+bool is_in_table(std::string searched, HashItem h_table[], const int& size)
+{
+    int hash_key = hashf_key(searched, size);
+    ListItem* temp = h_table[hash_key]._first;
+
+    while (temp->_name != searched)
+    {
+        temp = temp->_next;
+        if (temp == nullptr)
+        {
+            return false;
+        }
+    }
+    return true;
+
+
+}
 
 void hash_func(std::string str, HashItem hash_table[], const int& m, int& compares, int& refers)
 {
@@ -44,6 +61,11 @@ void hash_func(std::string str, HashItem hash_table[], const int& m, int& compar
     }
     else
     {
+        if (is_in_table(str, hash_table,m))
+        {
+            std::cout << "\nThere is already such element in hash table!\n";
+            return;
+        }
 
         hash_table[hash_key]._last->_next = new ListItem(str);
         hash_table[hash_key]._last = hash_table[hash_key]._last->_next;
@@ -90,9 +112,8 @@ void search(std::string searched, HashItem h_table[], const int& size, int& comp
     compares++;
     refers++;
     std::cout << "Item " << searched << " is found on position: " << hash_key << "\n";
-    
-    
 }
+
 
 void delete_item(std::string searched, HashItem h_table[], const int& size, int& compares, int& refers)
 {
@@ -218,10 +239,10 @@ int main()
             }
 
             hash_table = new HashItem[size];
-            for (int i = 0; i < 10; i++)
-            {
-                hash_func(my_keys[i], hash_table, size, compares, refs);
-            }
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    hash_func(my_keys[i], hash_table, size, compares, refs);
+            //}
 
             std::cout << "Hash table is initiallised with pre made keys!\n Compares: " << compares << " Refers: " << refs << std::endl;
             break;

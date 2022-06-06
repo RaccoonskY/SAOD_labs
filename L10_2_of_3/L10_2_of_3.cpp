@@ -21,19 +21,45 @@ int hashf_key(std::string str, const int& m)
     return hash_key;
 }
 
+bool is_in_table(std::string searched, std::string h_table[], const int& size)
+{
+    int h_key = hashf_key(searched, size);
+    int i = 0;
+    int j = (h_key + i) % size;
+    while (h_table[j] != searched && i < size)
+    {
+        i++;
+        j = (h_key + i) % size;
+    }
 
-void hash_func(std::string str, std::string hash_table[],const int& m, int& compares, int& refers)
+    if (h_table[j] == searched)
+    {
+        return true;
+
+    }
+    else
+    {
+        return false;
+    }
+}
+
+
+void hash_func(std::string str, std::string hash_table[], const int& m, int& compares, int& refers)
 {
 
     int hash_key = hashf_key(str, m);
     int i = 0;
     int j = (hash_key + i) % m;
-    while (hash_table[j] != "" && i < m)
+    while (hash_table[j] != "" && i < m )
     {
+        if (hash_table[j] == str)
+        {
+            std::cout << "\n There is already such element!\n";
+            return;
+        }
         i++;
         j = (hash_key + i) % m;
         compares++;
-
     }
     
     if (hash_table[j] == "")
@@ -49,20 +75,18 @@ void hash_func(std::string str, std::string hash_table[],const int& m, int& comp
 
 };
 
-void hash_func(std::string keys[], std::string hash_table[],const int& m, int& compares, int& refers)
+void hash_func(std::string keys[], std::string hash_table[], const int& m, int& compares, int& refers)
 {
     int hash_key;
     for (size_t i = 0; i < 10; i++)
     {
         hash_func(keys[i], hash_table, m, compares, refers);
     }
-
-
 };
 
 void table_add(std::string table[], std::string _new, const int& m, int& compares, int& refers)
 {
-    int h_key =hashf_key(_new, m);
+    int h_key = hashf_key(_new, m);
 
 }
 
@@ -100,6 +124,7 @@ void search(std::string searched, std::string h_table[], const int& size, int& c
     compares++;
 
 }
+
 
 enum Menu {
     MENU_INIT,
@@ -162,9 +187,9 @@ int main()
             }
 
             hash_table = new std::string[size];
-            hash_func(my_keys, hash_table, size, compares, refs);
+        /*    hash_func(my_keys, hash_table, size, compares, refs);
 
-            std::cout << "Hash table is initiallised with pre made keys!\n Compares: " << compares << " Refers: " << refs << std::endl;
+            std::cout << "Hash table is initiallised with pre made keys!\n Compares: " << compares << " Refers: " << refs << std::endl;*/
             break;
         case MENU_SHOW:
             if (hash_table != nullptr)

@@ -1,4 +1,5 @@
 #include "Stack.h"
+#include <iomanip>
 
 
 void Stack::push(const int& count, const std::string& name)
@@ -60,16 +61,28 @@ void Stack::pop()
 
 }
 
+void Stack::init_stack(const int& size)
+{
+	if (_mass == nullptr)
+	{
+		_mass = new SNode[size];
+		_size = size;
+	}
+}
 
 void Stack::show()
 {
 	int id = _ptr;
 	while (id != -1)
 	{
-		std::cout << "Programm: " << _mass[id].get_prog() << " Words: " << _mass[id].get_words() << " |";
+		std::cout
+			<< "\n|                |                                    |                  |                               |"
+			<< "\n| Subprog. name: |"; std::cout << std::setw(35) << _mass[id].get_prog(); std::cout << " | Number of lines: |" <<
+			std::setw(8) << _mass[id].get_words() <<std::setw(24)<< "|";
+		std::cout
+			<< "\n|________________|____________________________________|__________________|_______________________________|";
 		id--;
 	}
-	std::cout<<std::endl;
 }
 
 
